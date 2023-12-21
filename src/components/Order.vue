@@ -1,14 +1,14 @@
 <script>
 /* eslint-disable */
 
-import FirebaseManager from "@/utils/FirebaseManager";
-import ConfirmOrder from "./ConfirmOrder";
-import checkAuth from "@/checkAuth";
-import lodashfp from "lodash/fp";
-import footerComponent from "./footer";
+import FirebaseManager from "@/utils/FirebaseManager"; // 引入 Firebase 管理工具
+import ConfirmOrder from "./ConfirmOrder"; // 引入確認訂單組件
+import checkAuth from "@/checkAuth"; // 引入用戶身份驗證模塊
+import lodashfp from "lodash/fp"; // 引入 lodash-fp 工具庫
+import footerComponent from "./footer"; // 引入頁腳組件
 
 export default {
-  props: ["storeId", "orderId"],
+  props: ["storeId", "orderId"], // 從父組件接收店鋪ID和訂單ID
   data() {
     return {
       uid: "",
@@ -23,8 +23,8 @@ export default {
     };
   },
   components: {
-    ConfirmOrder,
-    footerComponent
+    ConfirmOrder, // 註冊確認訂單組件
+    footerComponent // 註冊頁腳組件
   },
   created() {
     checkAuth

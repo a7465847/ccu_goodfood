@@ -29,24 +29,24 @@
           <li>^</li>
         </ul>
       </div> -->
-      <input type="text" class="remark" placeholder="備註" v-model="store.mark">
+      <input type="text" class="remark" placeholder="圖片網址" v-model="store.mark">
       <a href="#" class="confirm" @click="addStore">確認</a>
     </div>
   </div>
 </template>
 <script>
-import FirebaseManager from "@/utils/FirebaseManager";
-import checkAuth from "@/checkAuth";
+import FirebaseManager from "@/utils/FirebaseManager"; // 引入 Firebase 管理模塊
+import checkAuth from "@/checkAuth"; // 引入驗證模塊
 
 const store = FirebaseManager.database.ref("store");
 
 export default {
   data() {
     return {
-      storeId: "",
+      storeId: "", // 新店家的 ID
       selected: "",
       phoneNumber: "",
-      store: {
+      store: { // 店家資訊
         name: "",
         address: "",
         orderIn: {
@@ -66,6 +66,7 @@ export default {
     };
   },
   created() {
+    // 組件創建時檢查登錄狀態
     /* check login status */
     checkAuth
       .checkAuth()
@@ -81,14 +82,17 @@ export default {
   },
   methods: {
     addStore() {
-      const newPhoneNumber = this.phoneNumber.split("-", 2);
+      const newPhoneNumber = this.phoneNumber.split("-", 2); // 分割電話號碼
       let addStoreInfo = this.store;
       console.log(newPhoneNumber);
       this.store.tel.block = newPhoneNumber[0];
       this.store.tel.num = newPhoneNumber[1];
       this.store.orderIn.unit = this.selected;
       this.storeId = store.push(addStoreInfo).key;
-
+      store
+        .child(this.storeId)
+        .child("store")
+        .push(addStoreInfo);
       this.$router.push({
         name: "addmenu",
         params: {

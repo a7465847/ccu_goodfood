@@ -2,12 +2,12 @@
 // var firebase = require("firebase");
 
 export default {
-  props: ["thisOrder", "total"],
+  props: ["thisOrder", "total"], // 從父組件接收的屬性：當前訂單和總金額
 
-  mounted() {},
+  mounted() {}, // 空的生命週期函數，可用於初始化時的操作
   methods: {
     cancel() {
-      this.$emit("cancel");
+      this.$emit("cancel"); // 當取消按鈕被點擊時，發出一個 'cancel' 事件
     }
   }
 };
@@ -35,9 +35,9 @@ export default {
 
 <style>
 li {
-  list-style: none;
+  list-style: none; /* 移除列表項目的標記 */
 }
-.comfirm_title {
+.comfirm_title { /* 訂單確認標題的樣式 */
   text-align: center;
 }
 
@@ -49,11 +49,12 @@ li {
   height: 100%;
   background-color: white;
 }
-
+/* 訂單詳情布局樣式 */
 .flex {
   display: flex;
   justify-content: space-between;
 }
+/* 個別訂單項目的樣式 */
 .order_detail {
   padding: 10px;
   margin: 10px 0;
@@ -68,7 +69,7 @@ li {
 .comfirm_total {
   text-align: right;
 }
-
+/* 確認和取消按鈕的共同樣式 */
 .comfirm_btn,
 .cancel_btn {
   display: block;

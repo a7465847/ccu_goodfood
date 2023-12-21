@@ -49,7 +49,7 @@ export default {
   <ul class="content">
       <li v-for="(value, key) in stores" :key="key.id">
         <router-link :to="{path:'/storeinfo/'+key}">
-          <img src="https://fakeimg.pl/120x90/?text=Food&font=lobster" alt="">
+          <img :src="value.mark ||'https://fakeimg.pl/120x90/?text=Food&font=lobster'" alt="">
           <div class="info_box">
             <div class="store_name">{{value.name}}</div>
             <div class="open_time">營業時間：{{value.time.start}}~{{value.time.end}}</div>
@@ -91,6 +91,9 @@ ul.content{
     img{
       margin-left: 28px;
       justify-content: flex-start;
+      width: 120px;
+      height: 90px;
+      object-fit: contain;
     }
     .info_box{
       margin-left: 18px;

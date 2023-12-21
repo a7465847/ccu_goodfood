@@ -24,20 +24,20 @@
   </div>
 </template>
 <script>
-import FirebaseManager from "@/utils/FirebaseManager";
-import checkAuth from "@/checkAuth";
+import FirebaseManager from "@/utils/FirebaseManager"; // 引入 Firebase 管理模塊
+import checkAuth from "@/checkAuth"; // 引入驗證模塊
 
-const store = FirebaseManager.database.ref("store");
+const store = FirebaseManager.database.ref("store"); // 設置 Firebase 中的 store 參考
 
 export default {
   props: ["storeId"],
   data() {
     return {
-      menuName: "",
-      menuPrice: "",
-      showOption: false,
-      menuOptions: [],
-      menus: {
+      menuName: "", // 菜單名稱
+      menuPrice: "", // 菜單價格
+      showOption: false, // 控制是否顯示副選項輸入框
+      menuOptions: [], // 存儲副選項
+      menus: { // 預設菜單名稱
         name: "玉米濃湯麵",
         price: 100,
         options: [
@@ -55,17 +55,17 @@ export default {
       }
     };
   },
-  created() {
+  created() { // 組件創建時檢查登錄狀態
     /* check login status */
     checkAuth
       .checkAuth()
       .then(userInfo => {
-        this.uid = userInfo.uid;
+        this.uid = userInfo.uid; // 獲取用戶 UID
         this.displayName = userInfo.displayName;
       })
       .catch(() => {
         this.$router.push({
-          name: "login"
+          name: "login" // 若未登錄，導航至登錄頁面
         });
       });
   },

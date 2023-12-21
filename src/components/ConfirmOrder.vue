@@ -1,15 +1,16 @@
 <script>
-import FirebaseManager from "@/utils/FirebaseManager";
+import FirebaseManager from "@/utils/FirebaseManager"; // 引入 Firebase 管理模塊
 
 export default {
-  props: ["user", "storeId", "orderId", "uid"],
+  props: ["user", "storeId", "orderId", "uid"], // 從父組件接收用戶、商店ID、訂單ID和用戶ID
   data() {
     return {
-      total: 0,
-      comfirmed: false
+      total: 0, // 總金額
+      comfirmed: false // 是否確認
     };
   },
   mounted() {
+    // 當組件掛載後，從 Firebase 讀取並設置訂單總金額
     FirebaseManager.database
       .ref("order/" + this.orderId + "/result")
       .child("total")
@@ -22,6 +23,8 @@ export default {
 
   methods: {
     comfirmOrder() {
+      // 確認訂單方法
+      // 更新 Firebase 中的訂單總金額
       // 先獲取資料庫的總訂單金額，加上此次訂單金額，再更新上去
       FirebaseManager.database
         .ref("order/" + this.orderId + "/result")
@@ -30,18 +33,18 @@ export default {
         .then(snapshot => {
           this.total = snapshot.val();
           console.log(this.total);
-          this.total += this.user.total;
+          this.total += this.user.total; // 增加用戶的訂單金額
           console.log(this.total);
         })
         .then(() => {
           FirebaseManager.database
             .ref("order/" + this.orderId + "/result")
             .child("total")
-            .set(this.total);
+            .set(this.total); // 更新 Firebase 中的總金額
         });
 
       console.log(this.user);
-
+      // 更新用戶訂單信息
       let update = {};
       update[this.uid] = this.user;
       FirebaseManager.database
@@ -49,6 +52,7 @@ export default {
         .update(update)
         .then(data => {
           console.log(data);
+          // 導航到確認頁面
           this.$router.push({
             name: "confirmed",
             params: { storeId: this.storeId, orderId: this.orderId }
@@ -57,7 +61,7 @@ export default {
     },
     cancelOrder() {
       this.$emit("cancelOrder");
-      this.$router.go(-1);
+      this.$router.go(-1); // 返回上一頁
     }
   }
 };

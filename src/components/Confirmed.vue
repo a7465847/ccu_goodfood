@@ -1,11 +1,12 @@
 <script>
 export default {
-  props: ["orderId", "storeId"],
-  mounted() {
+  props: ["orderId", "storeId"], // 從父組件接收 orderId 和 storeId 屬性
+  mounted() { // 當組件掛載後執行
     setTimeout(() => {
+      // 設置延遲（500毫秒）
       this.$router.push({
         name: "result",
-        params: { orderId: this.orderId, storeId: this.storeId }
+        params: { orderId: this.orderId, storeId: this.storeId } // 傳遞 orderId 和 storeId 作為參數
       });
     }, 500);
   }

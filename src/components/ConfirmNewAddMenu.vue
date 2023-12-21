@@ -9,10 +9,12 @@ export default {
   props: ["storeId"],
   data() {
     return {
-      img: require("@/assets/images/order-icon.svg")
+      img: require("@/assets/images/order-icon.svg") // 從 assets 中加載圖像並賦值給 img 變量
     };
   },
   mounted() {
+    // 當組件掛載後執行
+    // 設置延遲（2500毫秒）
     setTimeout(() => {
       this.$router.push({
         name: "addmenu",

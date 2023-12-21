@@ -1,15 +1,17 @@
 <script>
-import FirebaseManager from "@/utils/FirebaseManager";
-import olddata from "@/goodfoodOld";
+import FirebaseManager from "@/utils/FirebaseManager"; // 引入 Firebase 管理模塊
+import olddata from "@/goodfoodOld"; // 引入舊數據
 
-let oldMenu = olddata.dish;
+let oldMenu = olddata.dish; // 獲取舊菜單數據
 
 async function uploadStore(store) {
+  // 異步函數上傳店家信息並返回鍵值
   let storeKey = await FirebaseManager.database.ref("store").push(store).key;
   console.log(store.name, storeKey);
   return storeKey;
 }
 
+// 異步函數上傳菜單信息並返回鍵值
 async function uploadMenu(storeKey, menu, store) {
   let menuKey = await FirebaseManager.database
     .ref("store")
@@ -24,13 +26,14 @@ async function uploadMenu(storeKey, menu, store) {
 export default {
   data() {
     return {
-      route: "",
-      updateData: "",
-      msg: ""
+      route: "", // Firebase 數據路徑
+      updateData: "", // 要更新的數據
+      msg: "" // 信息顯示
     };
   },
   methods: {
     updateStore() {
+      // 更新所有店家信息
       let oldStores = olddata.store;
 
       for (let oldKey in oldStores) {
@@ -79,7 +82,7 @@ export default {
       }
     },
     update() {
-      this.msg = "";
+      this.msg = ""; // 更新特定路徑的數據
 
       FirebaseManager.database
         .ref(this.route)

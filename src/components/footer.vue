@@ -9,7 +9,7 @@
         <img src="../assets/images/icon-home.svg" alt="">
       </router-link>
     </div>
-    <div class="member">
+    <!-- <div class="member">
       <router-link
       :to="{
         path: '/member'
@@ -17,7 +17,7 @@
       >
         <img src="../assets/images/icon-member.svg" alt="">
       </router-link>
-    </div>
+    </div> -->
   </div>
 </template>
 

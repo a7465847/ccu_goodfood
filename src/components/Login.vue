@@ -1,7 +1,8 @@
 <script>
-import FirebaseManager from "@/utils/FirebaseManager";
-var SimpleVueValidation = require("simple-vue-validator");
+import FirebaseManager from "@/utils/FirebaseManager"; // 引入 Firebase 管理模塊
+var SimpleVueValidation = require("simple-vue-validator"); // 引入 Simple Vue Validator
 var Validator = SimpleVueValidation.Validator.create({
+  // 創建驗證器並設置自定義錯誤消息
   templates: {
     required: "此欄位為必填",
     minLength: "密碼長度需大於六字元",
@@ -32,19 +33,20 @@ export default {
   mixins: [require("simple-vue-validator").mixin],
   validators: {
     email: function(value) {
-      return Validator.value(value)
+      return Validator.value(value) // 驗證電子郵件
         .required()
         .email();
     },
     password: function(value) {
       return Validator.value(value)
         .required()
-        .minLength(6);
+        .minLength(6); // 驗證密碼
     }
   },
   methods: {
     login: function() {
       this.$validate().then(success => {
+        // 驗證表單
         if (success) {
           console.log("Validation succeeded!");
           this.isBtnDisabled = true;
@@ -61,7 +63,7 @@ export default {
                 this.$router.push({ name: "index" });
               }
             })
-            .catch(error => {
+            .catch(error => { // 登入失敗的處理
               console.log(error.code);
               this.isBtnDisabled = false;
 
@@ -124,7 +126,7 @@ export default {
       </div>
     </form>
   </div>
-  <div>
+  <!-- <div>
     <router-link class="btn" :to="{
       name:'register',
       query: { orderId: this.$route.query.orderId, storeId: this.$route.query.storeId }
@@ -132,7 +134,7 @@ export default {
   </div>
   <div>
     <router-link class="forgotpw" :to="{name:'forgotpw'}">忘記密碼</router-link>
-  </div>
+  </div> -->
   
 </div>
 </template>

@@ -1,20 +1,19 @@
 <script>
-import FirebaseManager from "@/utils/FirebaseManager";
-import checkAuth from "@/checkAuth";
-import "swiper/dist/css/swiper.css";
-import "../scss/swiper-style.css";
-import { swiper, swiperSlide } from "vue-awesome-swiper";
-// import lodashfp from "lodash/fp";
+import FirebaseManager from "@/utils/FirebaseManager"; // 引入 Firebase 管理模塊
+import checkAuth from "@/checkAuth"; // 引入用戶驗證模塊
+import "swiper/dist/css/swiper.css"; // 引入 Swiper 的 CSS
+import "../scss/swiper-style.css"; // 引入自定義的 Swiper 樣式
+import { swiper, swiperSlide } from "vue-awesome-swiper"; // 引入 Swiper 插件的組件
+// import lodashfp from "lodash/fp"; 
 
 export default {
   data() {
     return {
       uid: "",
       displayName: "Guest",
-      lottery: "",
-      recommend: [],
-      // swiper的選項
-      swiperOption: {
+      lottery: "", // 抽選獲得的店家
+      recommend: [], // 推薦的店家數組
+      swiperOption: { // Swiper 的配置選項
         slidesPerView: 2.2,
         spaceBetween: 10,
         freeMode: true,
@@ -34,10 +33,10 @@ export default {
   },
   components: {
     swiper,
-    swiperSlide
+    swiperSlide // 註冊 Swiper 組件
   },
   created() {
-    // 抽出首頁要推薦的n個店家
+    // 從 Firebase 獲取並設置推薦店家
     FirebaseManager.database
       .ref("store")
       .once("value")
@@ -70,6 +69,7 @@ export default {
       }
       return result;
     }
+    // 用戶驗證
     checkAuth.checkAuth().then(userInfo => {
       this.uid = userInfo.uid;
       this.displayName = userInfo.displayName;
@@ -79,10 +79,12 @@ export default {
     signOut() {
       FirebaseManager.signOut().then(function() {
         // Sign-out successful.
-      });
-      // .catch(function(error) {
-      //   // An error happened.
-      // });
+      })
+        .catch(function(error) {
+        // An error happened.
+          console.log(error);
+        });
+      this.$router.push("/login");
     }
   }
 };
@@ -118,7 +120,7 @@ export default {
       <swiperSlide class="recommend" v-for="(store,idx) in recommend" :key="idx">
           <router-link class="store" :to="{name:'storeinfo', params:{storeId:store.key}}">
           
-          <img class="cover_img" src="../assets/images/cover3.jpg" alt="">
+          <img class="cover_img" :src="store.mark || '../assets/images/cover3.jpg'" alt="">
           <div class="store_name">{{store.name}}</div>
             <!-- {{store.name}} -->
           </router-link>
@@ -230,6 +232,7 @@ a {
     .cover_img {
       width: 100%;
       height: 134px;
+      object-fit: contain;
     }
 
     .store_name {
